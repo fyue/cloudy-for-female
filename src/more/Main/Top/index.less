@@ -1,0 +1,136 @@
+.top {
+  width: 1080px;
+  height: 1052px;
+  .head {
+    width: 1080px;
+    height: 612px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    .flexRight {
+      width: 1040px;
+      height: 530px;
+      position: relative;
+      overflow: hidden;
+      > img {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        width: 1040px;
+        height: 530px;
+      }
+      .longPicWrapper {
+        position: absolute;
+        left: 0px;
+        width: 1040px * 12;
+        height: 530px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        .eachPlayItem {
+          width: 1040px;
+          height: 530px;
+          position: relative;
+          .leftImg {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            border: 6px solid black;
+            width: 518px;
+            height: 518px;
+          }
+          .rightDetails {
+            position: absolute;
+            top: 75px; //todo
+            right: 30px; //todo
+            width: 350px;
+            height: 365px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            .top {
+              width: 350px;
+              height: 100px;
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              p {
+                &:nth-of-type(1) {
+                  font-size: 48px;
+                  font-weight: bold;
+                }
+                &:nth-of-type(2) {
+                  font-size: 36px;
+                  font-weight: bold;
+                }
+              }
+            }
+            .center {
+              width: 350px;
+              height: 75px;
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              li {
+                font-size: 24px;
+              }
+            }
+            .bottom {
+              width: 350px;
+              height: 110px;
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              align-items: center;
+              p {
+                font-size: 36px;
+                color: rgb(203, 143, 64);
+              }
+              a {
+                width: 275px;
+                height: 50px;
+                font-size: 24px;
+
+                color: rgb(99, 56, 0);
+                background-color: rgb(238, 195, 139);
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                &:focus {
+                  text-decoration: none;
+                }
+              }
+            }
+          }
+        }
+        transition-property: left;
+        transition-duration: 1s;
+        transition-timing-function: ease;
+/*        background: linear-gradient(to right
+        ,#000 10%, #fff 20%
+        ,#f00 30%, #0f0 40%
+        ,#00f 50%, #ff0 60%
+        ,#f0f 70%, #0ff 80%
+        ,#999 90%, #fff 100%);*/
+      } //test
+    }
+  }
+  .bod {
+    width: 1080px;
+    height: 440px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    .eachRow {
+      width: 1000px;
+      height: 163px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+}

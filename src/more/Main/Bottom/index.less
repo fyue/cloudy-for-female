@@ -1,0 +1,48 @@
+.bottom {
+  width: 1080px;
+  height: 868px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgb(246, 246, 246);
+  .bod {
+    z-index: 10;
+    width: 1000px;
+    height: 772px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .left, .right {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+/*      div {
+        background: yellow; //test
+      }*/
+      > div {
+        width: 473px;
+        border-radius: 10px;
+      }
+    }
+    .left {
+      > div {
+        &:nth-of-type(1) {
+          height: 353px;
+        }
+        &:nth-of-type(2), &:nth-of-type(3) {
+          height: 183px;
+        }
+      }
+    }
+    .right {
+      > div {
+        &:nth-of-type(1), &:nth-of-type(2), &:nth-of-type(3) {
+          height: 141px;
+        }
+        &:nth-of-type(4) {
+          height: 272px;
+        }
+      }
+    }
+  }
+}

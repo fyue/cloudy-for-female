@@ -1,0 +1,60 @@
+.layout {
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  .restart{
+    width: 50px;
+    height: 50px;
+    bottom: 0;
+    position: absolute;
+    left: 0;
+    z-index: 99;
+  }
+}
+
+:global{
+  .example-enter {
+    opacity: 0;
+    transform: rotateY(270deg);
+    //transform-origin: -50% -50% -540px;
+    transform-origin: 50% 50% 1080px;
+    -webkit-transform: rotateY(270deg);
+    -webkit-transform-origin: 50% 50% 1080px;
+
+  }
+
+  .example-enter.example-enter-active {
+    opacity: 1;
+    //transform-origin: -50% -50% 0;
+    transform-origin: 50% 50% 0;
+    -webkit-transform-origin: 50% 50% 0;
+    transform: perspective(2000px) rotateY(360deg);
+    //transform-style:preserve-3d;
+    backface-visibility:hidden;
+    //visibility: hidden;
+    -webkit-transform: perspective(2000px) rotateY(360deg);
+    //-webkit-transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
+    transition: all 1000ms ease-in;
+    -webkit-transition: all 1000ms ease-in;
+  }
+
+  .example-leave {
+    opacity: 1;
+  }
+
+  .example-leave.example-leave-active {
+    opacity: 0;
+    transform-origin: 50% 50% 1080px;
+    transform: perspective(2000px) rotateY(180deg);
+    //transform-style:preserve-3d;
+    backface-visibility:hidden;
+    //visibility: hidden;
+    -webkit-transform: perspective(2000px) rotateY(180deg);
+    //-webkit-transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
+    transition: all 1000ms ease-in;
+    -webkit-transition: all 1000ms ease-in;
+  }
+}
+

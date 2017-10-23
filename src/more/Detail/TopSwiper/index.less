@@ -1,0 +1,66 @@
+.top {
+  width: 100%;
+  height: 635px;
+  position: absolute;
+  top: 219px;
+  .inner {
+    width: 650px;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    -webkit-display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: absolute;
+    left: 60px;
+    .bigImage {
+      width: 498px;
+      height: 498px;
+      background-size: 100%;
+      background-repeat: no-repeat;
+      border: 1px #efc792 solid;
+      .image{
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        background-repeat: no-repeat;
+      }
+    }
+    .imageList {
+      width: 90px;
+      height: 500px;
+      display: flex;
+      -webkit-display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+        .image {
+          width: 90px;
+          height: 90px;
+          background-size: 100%;
+          background-repeat: no-repeat;
+          &.checked {
+            width: 84px;
+            height: 84px;
+            border: 3px #efc792 solid;
+          }
+        }
+
+    }
+  }
+  .qrcode{
+    width: 246px;
+    height: 246px;
+    background: #eec38b;
+    position: absolute;
+    right: 60px;
+    top: 50%;
+    margin-top: -123px;
+    canvas{
+      width: 200px !important;
+      height: 200px !important;
+      background: white;
+      padding: 15px 15px;
+      margin: 8px 8px;
+    }
+  }
+}

@@ -1,0 +1,40 @@
+.sizeCheck {
+  height: 150px;
+  text-align: center;
+  position: absolute;
+  width: 100%;
+  //top: 976px;
+  .text {
+    font-size: 48px;
+    line-height: 48px;
+  }
+  .sizeBtn {
+    height: 57px;
+    justify-content: space-between;
+    flex-direction: row;
+    display: flex;
+    position: absolute;
+    .item {
+      border: 3px #acacac solid;
+      width: 205px;
+      height: 57px;
+      font-size: 30px;
+      line-height: 57px;
+      border-radius: 57px;
+      top: 50px;
+      position: relative;
+      &.checked {
+        border: 3px #eec38b solid;
+        background: #eec38b;
+        color: white;
+      }
+      &.cantCheck {
+        border: 3px dashed #D6D6D8;
+        color: #CDCDCD;
+        pointer-events: none;
+
+      }
+    }
+  }
+
+}
