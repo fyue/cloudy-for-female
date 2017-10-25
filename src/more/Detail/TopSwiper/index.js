@@ -9,22 +9,28 @@ class Top extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      swiperIndex: 0
+    };
   }
 
   renderImageList() {
-    const {product, bigImage} = this.props;
+    const {product} = this.props;
     const imageList = product.productImage;
     return imageList.map((item, index) => {
       const style = {
-        backgroundImage: `url(${item}_90x90q90.jpg)`
+        backgroundImage: `url(${item}_90x90q90.jpg_.webp)`
       };
-      let checked = bigImage === '' && index === 0 || bigImage === item + '_250x250q80.jpg';
+      let checked = this.state.swiperIndex === index;
       const cls = classnames([css.image, {[css.checked]: checked}]);
       return <div className={cls} key={index} style={style} onClick={this.changeSwiper.bind(this, index)}/>;
     });
   }
 
   changeSwiper(index) {
+    this.setState({
+      swiperIndex: index
+    });
     swiper.slideTo(index, 1000, false);// 切换到第一个slide，速度为1秒
   }
 
@@ -33,7 +39,7 @@ class Top extends React.Component {
     const imageList = product.productImage;
     return imageList.map((item, index) => {
       const style = {
-        backgroundImage: `url(${item}_500x500q90.jpg)`
+        backgroundImage: `url(${item}_500x500q90.jpg_.webp)`
       };
       return <div className={css.image + ' swiper-slide'} key={index} style={style}/>;
     });
@@ -55,10 +61,10 @@ class Top extends React.Component {
     this.props.setBigImage(uri);
   }
 
-  getUrl() {
+  get getUrl() {
     const {product} = this.props;
     const {itemId} = product;
-    return `http://h5.m.taobao.com/app/smg/index.html?codeType=1&targetType=item&isUniquePage=0&isOpenBox=1&sellerId=287745076&itemId=${itemId}`;
+    return `http://h5.m.taobao.com/app/smg/index.html?codeType=1&targetType=item&isUniquePage=0&isOpenBox=1&storeId=177259234&sellerId=287745076&itemId=${itemId}`;
   }
 
   render() {
@@ -77,7 +83,7 @@ class Top extends React.Component {
           </div>
         </div>
         <div className={css.qrcode}>
-          <QRCode value={this.getUrl()}/>
+          <QRCode value={this.getUrl}/>
         </div>
       </div>
 

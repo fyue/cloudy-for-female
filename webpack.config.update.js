@@ -46,7 +46,7 @@ module.exports = (config) => {
           query: {
             limit: 10000,
             // CSS图片目录
-            name: IS_DEV ? '[path][name].[ext]' : 'assets/[name].[ext]',
+            name: IS_DEV ? '[path][name].[ext]' : 'assets/[path][name].[ext]',
           }
         }, {
           test: /\.less$/,

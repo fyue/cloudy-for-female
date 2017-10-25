@@ -211,10 +211,10 @@ export default class Top extends React.Component {
     return -(left / 108) + 'rem';
   }
 
-  goToDetails(idx, ev) {
+  goToDetails(idx, mainPlayCatas, ev) {
     ev.preventDefault();
-    this.props.goDiffCataSecond(8);
-    this.props.goDetail(idx);
+    this.props.goDiffCataSecond(8); // the number 8 will be decreased to 7;
+    this.props.goDetail(idx, mainPlayCatas);
   }
 
   /*  {
@@ -250,7 +250,7 @@ export default class Top extends React.Component {
                   </ul>
                   <div className={css.bottom}>
                     <p><span>￥</span><span>{mainData ? mainData['item_' + item.id].subPrice : '加载中...'}</span></p>
-                    <a href="###" onClick={this.goToDetails.bind(this, idx)}><span>点击查看详情</span></a>
+                    <a href="###" onClick={this.goToDetails.bind(this, idx, 7)}><span>点击查看详情</span></a>{/*number 7 is the mainPlayCatas index*/}
                   </div>
                 </div>
               </div>

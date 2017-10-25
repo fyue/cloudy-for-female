@@ -28,9 +28,7 @@ class Detail extends React.Component {
 
     const {itemId, products} = this.props;
     const product = products[itemId];
-    // let uri = color === -1 ?
-    // let uri = this.state.bigImage === product.skuImage[index] + '_250x250q80.jpg'
-    //   ? product.productImage[0] : product.skuImage[index];
+
     const color = this.state.index.colorIndex === index ? -1 : index;
     let uri = '';
     if (color === -1) {
@@ -55,6 +53,8 @@ class Detail extends React.Component {
       state.bigImage = uri + '_500x500q90.jpg';
     });
   }
+
+
 
   back() {
     this.props.back();
