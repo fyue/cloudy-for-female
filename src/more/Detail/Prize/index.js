@@ -17,11 +17,13 @@ class Prize extends React.Component {
     } else {
       prizeX = skus[colorIndex] && skus[colorIndex][sizeIndex] ? skus[colorIndex][sizeIndex].prize : '000';
     }
-    console.log(skuSize, skuSize.length === 0);
-    console.log(prizeX);
-    let pre = prizeX.substr(0, prizeX.length - 2);
-    let next = prizeX.substr(prizeX.length - 2, 2);
-    const prize = pre + '.' + next;
+    let prize = product.subPrice;
+    if (prizeX !== '000') {
+      let pre = prizeX.substr(0, prizeX.length - 2);
+      let next = prizeX.substr(prizeX.length - 2, 2);
+      prize = pre + '.' + next;
+    }
+
     return (
       <div className={css.prize}>
         <div className={css.text}>

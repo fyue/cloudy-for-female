@@ -51,6 +51,11 @@ class Top extends React.Component {
       effect: 'cube',
       cube: {
         shadow: false
+      },
+      onSlideChangeEnd: (swiper) => {
+        this.setState({
+          swiperIndex: swiper.activeIndex
+        });
       }
     });
   }

@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import css from './index.less';
 import Products from './Products';
 
-import fixredflower from './images/head/redflower.png';
+import topHeader from './images/topHeader.png';
 
 //small one
 import s1 from './images/bod/1s.png';
@@ -217,24 +217,12 @@ export default class Top extends React.Component {
     this.props.goDetail(idx, mainPlayCatas);
   }
 
-  /*  {
-   id: '',
-   pic: b1,
-   title: '爱华仕',
-   description: '铝框拉杆箱',
-   special1: '一体化铝框',
-   special2: '3色可选',
-   link: 'https://detail.tmall.com/item.htm?id=557489349781',
-   price: '1111',
-   },*/
-
   renderHeadWrapper() {
     let position = this.mapIdxToPosRem(this.state.activeId);
     let mainData = this.props.mainData;
     return (
       <div className={css.head}>
         <div className={css.flexRight}>
-          {/*<img src={fixredflower} />*/}
           <div className={css.longPicWrapper} style={{left: position}} >
             {playDatas.map((item, idx) => (
               <div className={css.eachPlayItem} key={idx}>
@@ -284,6 +272,7 @@ export default class Top extends React.Component {
     const top = classnames([css.top], [css[`bg${this.props.index}`]]);
     return (
       <div className={top}>
+        <img src={topHeader} />
           {this.renderHeadWrapper()}
           {this.renderBod()}
       </div>

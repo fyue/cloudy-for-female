@@ -2,7 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import css from './index.less';
 
-class Bottom extends React.Component {
+export default class Bottom extends React.Component {
 
   constructor(props) {
     super(props);
@@ -33,4 +33,3 @@ class Bottom extends React.Component {
     );
   }
 }
-export default Bottom;

@@ -6,39 +6,45 @@
   width: 1080px;
   height: 1920px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
   position: absolute;
   .bg(@bg, 1080px, 1920px);
-  >img {
+  .topHeader {
+    width: 1080px;
+    height: 61px;
+    padding-bottom: 36px;
+  }
+  .backMenu {
     position: absolute;
     width: 160px;
     height: 160px;
-    right: 32px; //test
-    bottom: 760px; //test
+    right: 0px; //test
+    bottom: 740px; //test
   }
   .centerWapper {
     width: 960px;
-    height: 1850px;
+    height: 1787px; //1850px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     >img {
       width: 960px;
-      height: 580px;
+      height: 581px;
     }
     .bod {
       width: 960px;
-      height: 1216px;
+      height: 1165px; //1216px;
       .scrollWrapper {
         width: 962px;
-        height: 1216px;
+        height: 1165px; //1216px;
         overflow: scroll;
         .eachRow {
           width: 962px;
           height: 372px;
-          margin: 50px auto;
+          margin: 24px auto;
           &:first-of-type, &:last-of-type {
             margin: 0px;
           }

@@ -1,28 +1,28 @@
+/*const eachCatalog = {
+ type: 'laganxiang',
+ header: header1,
+ items: [
+ [{sale: sale1, label: '爱华仕', price: '1899.00'},
+ {sale: sale1, label: '爱华仕', price: '1899.00'},
+ {sale: sale1, label: '爱华仕', price: '1899.00'}],
+ [{sale: sale1, label: '爱华仕', price: '1899.00'},
+ {sale: sale1, label: '爱华仕', price: '1899.00'},
+ {sale: sale1, label: '爱华仕', price: '1899.00'}],
+ [{sale: sale1, label: '爱华仕', price: '1899.00'},
+ {sale: sale1, label: '爱华仕', price: '1899.00'},
+ {sale: sale1, label: '爱华仕', price: '1899.00'}],
+ [{sale: sale1, label: '爱华仕', price: '1899.00'},
+ {sale: sale1, label: '爱华仕', price: '1899.00'}],
+ ],
+ };*/
+
 import React from 'react';
 import classnames from 'classnames';
 import css from './index.less';
 
-
-
 import backMenu from './images/back.png';
 
-/*const eachCatalog = {
-  type: 'laganxiang',
-  header: header1,
-  items: [
-    [{sale: sale1, label: '爱华仕', price: '1899.00'},
-      {sale: sale1, label: '爱华仕', price: '1899.00'},
-      {sale: sale1, label: '爱华仕', price: '1899.00'}],
-    [{sale: sale1, label: '爱华仕', price: '1899.00'},
-      {sale: sale1, label: '爱华仕', price: '1899.00'},
-      {sale: sale1, label: '爱华仕', price: '1899.00'}],
-    [{sale: sale1, label: '爱华仕', price: '1899.00'},
-      {sale: sale1, label: '爱华仕', price: '1899.00'},
-      {sale: sale1, label: '爱华仕', price: '1899.00'}],
-    [{sale: sale1, label: '爱华仕', price: '1899.00'},
-      {sale: sale1, label: '爱华仕', price: '1899.00'}],
-  ],
-};*/
+import topHeader from './images/topHeader.png';
 
 export default class Second extends React.Component {
 
@@ -34,12 +34,9 @@ export default class Second extends React.Component {
     this.checkId = this.checkId.bind(this);
   }
 
-  componentDidMount() {
-  }
-
   renderBackMenu() {
     return (
-      <img src={backMenu} onTouchEnd={() => this.props.go('main')} />
+      <img className={css.backMenu} src={backMenu} onTouchEnd={() => this.props.go('main')} />
     );
   }
 
@@ -78,6 +75,7 @@ export default class Second extends React.Component {
     return (
       <div className={second}>
         {this.renderBackMenu()}
+        <img className={css.topHeader} src={topHeader} />
         {this.renderCenter()}
       </div>
     );

@@ -519,7 +519,7 @@ class Layout extends React.Component {
   }
 
   dataLoad(productList, index) {
-    const url = base + productList[index].join(',');
+    const url = base + productList[index].join(','); // 每一个种类的ID凭借
     reqwest({
       url: url,
       type: 'jsonp',
@@ -551,7 +551,17 @@ class Layout extends React.Component {
               oldObj.skusMapKeys.map((itemx) => {
                 if (itemx.propPath.indexOf(colorNumber) > -1) {
                   let skuId = itemx.skuId;
-                  let prize = oldObj.skusMapValues[skuId].price.priceMoney;
+                  //console.log(oldObj.skusMapValues[skuId]);
+                  //oldObj.skusMapValues[skuId].subPrice ? '' : console.log('itemID is:', item);
+                  let prize;
+                  if (oldObj.skusMapValues[skuId].subPrice) {
+                    prize = oldObj.skusMapValues[skuId].subPrice.priceMoney;
+                    //console.log('sub', item);
+                  } else {
+                    prize = oldObj.skusMapValues[skuId].price.priceMoney;
+                    //console.log('price', item);
+                  }
+
                   result = {skuId, prize};
                 }
               });
@@ -566,7 +576,14 @@ class Layout extends React.Component {
                 oldObj.skusMapKeys.map((itemx) => {
                   if (itemx.propPath.indexOf(colorNumber) > -1 && itemx.propPath.indexOf(sizeNumber) > -1) {
                     let skuId = itemx.skuId;
-                    let prize = oldObj.skusMapValues[skuId].price.priceMoney;
+                    let prize;
+                    if (oldObj.skusMapValues[skuId].subPrice) {
+                      prize = oldObj.skusMapValues[skuId].subPrice.priceMoney;
+                      //console.log('sub', item);
+                    } else {
+                      prize = oldObj.skusMapValues[skuId].price.priceMoney;
+                      //console.log('price', item);
+                    }
                     result = {skuId, prize};
                   }
                 });
@@ -586,7 +603,7 @@ class Layout extends React.Component {
         console.log(`load ${index} ready`);
         console.log('----------------------');
         this.setState({
-          products: products
+          products: products, // 解析完后的数据
         });
       },
       error: (data) => {
