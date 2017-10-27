@@ -5,6 +5,7 @@ import Detail from './Detail';
 import ReactCSSTransitionGroup from 'react/lib/ReactCSSTransitionGroup';
 import reqwest from 'reqwest';
 import Second from './Second';
+import Screen from './Screen';
 /* header */
 import h1 from '../image/sec/header/1.jpg';
 import h2 from '../image/sec/header/2.jpg';
@@ -84,6 +85,10 @@ import xp6 from '../image/sec/catalog/7/6.png';
 import xp7 from '../image/sec/catalog/7/7.png';
 import xp8 from '../image/sec/catalog/7/8.png';
 import xp9 from '../image/sec/catalog/7/9.png';
+
+const backToScreenInterval = 10000;
+
+let products = new Array(8);
 
 const cataDatas = [
   {
@@ -263,10 +268,10 @@ const cataDatas = [
   },
 ];
 
-
-let products = new Array(8);
-
 const base = 'http://cloudbuy.ews.m.jaeapp.com/api/fetch/';
+const base5 = '//192.168.1.8/api/fetch5/'; //另一套接口
+
+
 const buriedPointUrl = 'http://cloudbuy.ews.m.jaeapp.com/api/datatrack/';
 
 let buriedParams = {
@@ -285,7 +290,7 @@ class Layout extends React.Component {
     super(props);
     this.state = {
       checkId: -1,  //index in single catalog
-      goAhead: 'main',
+      goAhead: 'screen',
       products: [],
       variety: -1, //index with each catalog, value ranged in  [0-6, 7]
       mainData: null,  //get after did mount
@@ -296,8 +301,188 @@ class Layout extends React.Component {
     this.goDetail = this.goDetail.bind(this);
     this.restart = this.restart.bind(this);
     this.dataLoad = this.dataLoad.bind(this);
+    this.dataLoad5 = this.dataLoad5.bind(this);
     this.getTime = this.getTime.bind(this);
     this.buriedPoint = this.buriedPoint.bind(this);
+    this.refreshTouchDelay = this.refreshTouchDelay.bind(this);
+    this.reGoScreen = this.reGoScreen.bind(this);
+  }
+
+  dataLoad(productList, index) {
+    const url = base + productList[index].join(','); // 每一个种类的ID凭借
+    reqwest({
+      url: url,
+      type: 'jsonp',
+      method: 'get',
+      success: (data) => {
+        products[index] = productList[index].map((item) => {
+          let obj = {};
+          obj.itemId = item;
+          let oldObj = data[`item_${item}`];
+          obj.productImage = oldObj.images;
+          obj.subPrice = oldObj.subPrice;
+          obj.title = oldObj.title;
+          let skus = [];
+          let skuSize = [];
+          oldObj.skuProps.map((sku) => {
+            if (sku.name === '尺寸' || sku.name === '包袋大小') {
+              skuSize = sku.values;
+            } else if (sku.name === '颜色分类') {
+              skus = sku.values;
+            }
+          });
+          obj.skuSize = skuSize.map((value) => {
+            return value.name;
+          });
+          if (obj.skuSize.length === 0) {
+            obj.skus = skus.map(sku => {
+              let colorNumber = sku.vid;
+              let result = null;
+              oldObj.skusMapKeys.map((itemx) => {
+                if (itemx.propPath.indexOf(colorNumber) > -1) {
+                  let skuId = itemx.skuId;
+                  //console.log(oldObj.skusMapValues[skuId]);
+                  //oldObj.skusMapValues[skuId].subPrice ? '' : console.log('itemID is:', item);
+                  let prize;
+                  if (oldObj.skusMapValues[skuId].subPrice) {
+                    prize = oldObj.skusMapValues[skuId].subPrice.priceMoney;
+                    //console.log('sub', item);
+                  } else {
+                    prize = oldObj.skusMapValues[skuId].price.priceMoney;
+                    //console.log('price', item);
+                  }
+
+                  result = {skuId, prize};
+                }
+              });
+              return result;
+            });
+          } else {
+            obj.skus = skus.map((sku) => {
+              let colorNumber = sku.vid;
+              return skuSize.map((size) => {
+                let sizeNumber = size.vid;
+                let result = null;
+                oldObj.skusMapKeys.map((itemx) => {
+                  if (itemx.propPath.indexOf(colorNumber) > -1 && itemx.propPath.indexOf(sizeNumber) > -1) {
+                    let skuId = itemx.skuId;
+                    let prize;
+                    if (oldObj.skusMapValues[skuId].subPrice) {
+                      prize = oldObj.skusMapValues[skuId].subPrice.priceMoney;
+                      //console.log('sub', item);
+                    } else {
+                      prize = oldObj.skusMapValues[skuId].price.priceMoney;
+                      //console.log('price', item);
+                    }
+                    result = {skuId, prize};
+                  }
+                });
+                return result;
+              });
+            });
+          }
+          // obj.skuSize = obj.skuSize.length === 0 ? ['默认尺寸'] : obj.skuSize;
+          obj.skuImage = skus.map((value) => {
+            return value.image;
+          });
+          // obj.skuImage = obj.skuImage.length === 0 ? ['默认颜色'] : obj.skuImage;
+
+
+          return obj;
+        });
+        console.log(`load ${index} ready`);
+        console.log('----------------------');
+        this.setState({
+          products: products, // 解析完后的数据
+        });
+      },
+      error: (data) => {
+      }
+    });
+  }
+
+  dataLoad5(productList, index) {
+    const url = base5 + productList[index].join(','); // 每一个种类的ID凭借
+    reqwest({
+      url: url,
+      type: 'jsonp',
+      method: 'get',
+      success: (data) => {
+        console.log(data);
+        products[index] = productList[index].map((item) => {
+          let obj = {};
+          obj.itemId = item;
+          const oldObj = data[`item_${item}`];
+          obj.productImage = oldObj.images;
+          obj.subPrice = oldObj.subPrice;
+          obj.title = oldObj.title;
+          let skus = [];
+          let skuSize = [];
+          oldObj.skuProps.map((sku) => {
+            if (sku.propName === '尺寸' || sku.propName === '包袋大小') {
+              skuSize = sku.values;
+            } else if (sku.propName === '颜色分类') {
+              skus = sku.values;
+            }
+          });
+          obj.skuSize = skuSize.map((value) => {
+            return value.name;
+          });
+
+          if (obj.skuSize.length === 0) {
+            obj.skus = skus.map(sku => {
+              let colorNumber = sku.valueId;
+              let result = null;
+              oldObj.skusMapKeys.map((itemx) => {
+                if (itemx.propPath.indexOf(colorNumber) > -1) {
+                  let skuId = itemx.skuId;
+                  let prize = oldObj.skusMapValues[skuId].priceUnits[0].price; //?
+                  // oldObj.skusMapValues[skuId].subPrice.priceMoney
+                  // : oldObj.skusMapValues[skuId].price.priceMoney;
+                  result = {skuId, prize};
+                }
+              });
+              return result;
+            });
+          } else {
+            obj.skus = skus.map((sku) => {
+              let colorNumber = sku.valueId;
+              return skuSize.map((size) => {
+                let sizeNumber = size.valueId;
+                let result = null;
+                oldObj.skusMapKeys.map((itemx) => {
+                  if (itemx.propPath.indexOf(colorNumber) > -1 && itemx.propPath.indexOf(sizeNumber) > -1) {
+                    let skuId = itemx.skuId;
+                    // let prize = oldObj.skusMapValues[skuId].subPrice ?
+                    //   oldObj.skusMapValues[skuId].subPrice.priceMoney
+                    //   : oldObj.skusMapValues[skuId].price.priceMoney;
+
+                    let prize = oldObj.skusMapValues[skuId].priceUnits[0].price;
+                    result = {skuId, prize};
+                  }
+                });
+                return result;
+              });
+            });
+          }
+          console.log(skus);
+          obj.skuImage = skus.map((value) => {
+            console.log(value);
+            return value.imgUrl;
+          });
+          return obj;
+        });
+
+        this.setState({
+          products: products
+        });
+        console.log(products);
+        console.log('load ready');
+        console.log('----------------------');
+      },
+      error: (data) => {
+      }
+    });
   }
 
   componentWillMount() {
@@ -487,7 +672,7 @@ class Layout extends React.Component {
     });
      **/
     for (let i = 0; i < productList.length - 1; ++i) {
-      this.dataLoad(productList, i);
+      this.dataLoad5(productList, i);
     }
     // this.setState({
     //   products: products
@@ -502,7 +687,7 @@ class Layout extends React.Component {
       '536945453736', '551009959499', '558484444589', '555650445165', '556440998984', '556056797643'
     ];
 
-    let urlMain = base + mainTwDataIds.join(',');
+    let urlMain = base5 + mainTwDataIds.join(',');
     reqwest({
       url: urlMain,
       type: 'jsonp',
@@ -516,100 +701,29 @@ class Layout extends React.Component {
         console.log(data);
       }
     });
+
+    //Automatically back to the screen;
+    this.screen = setTimeout(this.reGoScreen, backToScreenInterval);
+
   }
 
-  dataLoad(productList, index) {
-    const url = base + productList[index].join(','); // 每一个种类的ID凭借
-    reqwest({
-      url: url,
-      type: 'jsonp',
-      method: 'get',
-      success: (data) => {
-        products[index] = productList[index].map((item) => {
-          let obj = {};
-          obj.itemId = item;
-          let oldObj = data[`item_${item}`];
-          obj.productImage = oldObj.images;
-          obj.subPrice = oldObj.subPrice;
-          obj.title = oldObj.title;
-          let skus = [];
-          let skuSize = [];
-          oldObj.skuProps.map((sku) => {
-            if (sku.name === '尺寸' || sku.name === '包袋大小') {
-              skuSize = sku.values;
-            } else if (sku.name === '颜色分类') {
-              skus = sku.values;
-            }
-          });
-          obj.skuSize = skuSize.map((value) => {
-            return value.name;
-          });
-          if (obj.skuSize.length === 0) {
-            obj.skus = skus.map(sku => {
-              let colorNumber = sku.vid;
-              let result = null;
-              oldObj.skusMapKeys.map((itemx) => {
-                if (itemx.propPath.indexOf(colorNumber) > -1) {
-                  let skuId = itemx.skuId;
-                  //console.log(oldObj.skusMapValues[skuId]);
-                  //oldObj.skusMapValues[skuId].subPrice ? '' : console.log('itemID is:', item);
-                  let prize;
-                  if (oldObj.skusMapValues[skuId].subPrice) {
-                    prize = oldObj.skusMapValues[skuId].subPrice.priceMoney;
-                    //console.log('sub', item);
-                  } else {
-                    prize = oldObj.skusMapValues[skuId].price.priceMoney;
-                    //console.log('price', item);
-                  }
-
-                  result = {skuId, prize};
-                }
-              });
-              return result;
-            });
-          } else {
-            obj.skus = skus.map((sku) => {
-              let colorNumber = sku.vid;
-              return skuSize.map((size) => {
-                let sizeNumber = size.vid;
-                let result = null;
-                oldObj.skusMapKeys.map((itemx) => {
-                  if (itemx.propPath.indexOf(colorNumber) > -1 && itemx.propPath.indexOf(sizeNumber) > -1) {
-                    let skuId = itemx.skuId;
-                    let prize;
-                    if (oldObj.skusMapValues[skuId].subPrice) {
-                      prize = oldObj.skusMapValues[skuId].subPrice.priceMoney;
-                      //console.log('sub', item);
-                    } else {
-                      prize = oldObj.skusMapValues[skuId].price.priceMoney;
-                      //console.log('price', item);
-                    }
-                    result = {skuId, prize};
-                  }
-                });
-                return result;
-              });
-            });
-          }
-          // obj.skuSize = obj.skuSize.length === 0 ? ['默认尺寸'] : obj.skuSize;
-          obj.skuImage = skus.map((value) => {
-            return value.image;
-          });
-          // obj.skuImage = obj.skuImage.length === 0 ? ['默认颜色'] : obj.skuImage;
-
-
-          return obj;
-        });
-        console.log(`load ${index} ready`);
-        console.log('----------------------');
-        this.setState({
-          products: products, // 解析完后的数据
-        });
-      },
-      error: (data) => {
-      }
-    });
+  shouldComponentUpdate(nextProps, nextStates) {
+    return this.state.goAhead !== nextStates.goAhead;
   }
+
+  reGoScreen() {
+    this.go('screen');
+    this.screen = setTimeout(this.reGoScreen, backToScreenInterval);
+  }
+
+  refreshTouchDelay() {
+    if (this.screen) {
+      console.log('clear screen');
+      clearTimeout(this.screen);
+      this.screen = setTimeout(this.reGoScreen, backToScreenInterval);
+    }
+  }
+
 
   go(witch) {
     this.setState({
@@ -688,6 +802,7 @@ class Layout extends React.Component {
   }
 
   render() {
+    console.log('enter in :', this.state.goAhead);
     let renderProxy = null;
     switch (this.state.goAhead) {
       case 'main' : {
@@ -705,11 +820,16 @@ class Layout extends React.Component {
         renderProxy =
           <Detail back={this.back} itemId={this.state.checkId} products={this.state.products[this.state.variety]}
                   key="detail"/>;
+        break;
+      }
+      case 'screen' : {
+        renderProxy = <Screen go={this.go}/>;
+        break;
       }
     }
 
     return (
-      <div className={css.layout}>
+      <div className={css.layout} onTouchEnd={this.refreshTouchDelay}>
         <div className={css.restart} onClick={this.restart.bind(this)}/>
         <ReactCSSTransitionGroup transitionName="example"
                                  transitionEnterTimeout={1500}
