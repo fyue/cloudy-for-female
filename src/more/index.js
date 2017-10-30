@@ -86,7 +86,7 @@ import xp7 from '../image/sec/catalog/7/7.png';
 import xp8 from '../image/sec/catalog/7/8.png';
 import xp9 from '../image/sec/catalog/7/9.png';
 
-const backToScreenInterval = 10000;
+const backToScreenInterval = 240000; //4分钟
 
 let products = new Array(8);
 
@@ -269,7 +269,7 @@ const cataDatas = [
 ];
 
 const base = 'http://cloudbuy.ews.m.jaeapp.com/api/fetch/';
-const base5 = '//192.168.1.8/api/fetch5/'; //另一套接口
+const base5 = 'http://cloudbuy.ews.m.jaeapp.com/api/fetch5/'; //另一套接口
 
 
 const buriedPointUrl = 'http://cloudbuy.ews.m.jaeapp.com/api/datatrack/';
@@ -408,7 +408,6 @@ class Layout extends React.Component {
       type: 'jsonp',
       method: 'get',
       success: (data) => {
-        console.log(data);
         products[index] = productList[index].map((item) => {
           let obj = {};
           obj.itemId = item;
@@ -465,11 +464,7 @@ class Layout extends React.Component {
               });
             });
           }
-          console.log(skus);
-          obj.skuImage = skus.map((value) => {
-            console.log(value);
-            return value.imgUrl;
-          });
+          obj.skuImage = skus;
           return obj;
         });
 

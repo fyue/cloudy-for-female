@@ -33,7 +33,7 @@ module.exports = (config) => {
           }
         },
         {
-          test: /\.mp4/,
+          test: /\.(mp4|mov)/,
           exclude: /node_modules/,
           loader: 'file-loader',
           query: {

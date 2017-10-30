@@ -14,9 +14,9 @@ class Top extends React.Component {
     const imageList = product.productImage;
     return imageList.map((item, index) => {
       const style = {
-        backgroundImage: `url(${item}_90x90q90.jpg)`
+        backgroundImage: `url(${item}_90x90q90.jpg_.webp)`
       };
-      let checked = bigImage === '' && index === 0 || bigImage === item + '_250x250q80.jpg';
+      let checked = bigImage === '' && index === 0 || bigImage === item + '_250x250q80.jpg_.webp';
       const cls = classnames([css.image, {[css.checked]: checked}]);
       return <div className={cls} key={index} style={style} onClick={this.setBigImage.bind(this, index)}/>;
     });
@@ -44,7 +44,7 @@ class Top extends React.Component {
       <div className={css.top}>
         <div className={css.inner}>
           <div className={css.bigImage}
-               style={{backgroundImage: `url(${bigImage || product.productImage[0] + '_250x250q80.jpg'})`}}/>
+               style={{backgroundImage: `url(${bigImage || product.productImage[0] + '_250x250q80.jpg_.webp'})`}}/>
           <div className={css.imageList}>
             {imageList}
           </div>

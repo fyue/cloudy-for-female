@@ -25,10 +25,17 @@ class ColorCheck extends React.Component {
       const checked = idx === colorIndex;
       const cantCheck = sku[idx] === null;
       const cls = classnames([css.item, {[css.check]: checked}, {[css.cantCheck]: cantCheck}]);
-      return (<div onClick={this.checkColor.bind(this, idx)} className={cls}
-                   style={{backgroundImage: `url(${item}_100x100q90.jpg)`}} key={idx}>
-        <span className={classnames({[css.span]: cantCheck})}/>
-      </div>);
+      if (item.imgUrl) {
+        return (<div onClick={this.checkColor.bind(this, idx)} className={cls}
+                     style={{backgroundImage: `url(${item.imgUrl}_100x100q90.jpg_.webp)`}} key={idx}>
+          <span className={classnames({[css.span]: cantCheck})}/>
+        </div>);
+      } else {
+        return <div onClick={this.checkColor.bind(this, idx)} className={cls} key={idx}>
+          {item.name.slice(0, 2)}
+          <span className={classnames({[css.span]: cantCheck})}/>
+        </div>;
+      }
     });
     let width = skuImage.length * 120;
     width = width > 864 ? 864 : width;

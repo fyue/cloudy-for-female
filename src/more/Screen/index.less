@@ -5,6 +5,15 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  position: relative;
+  .hander {
+    position: absolute;
+    width: 237px;
+    height: 230px;
+    bottom: 730px;
+    right: -100px;
+    z-index: 2;
+  }
   .topHeader {
     height: 61px;
     padding-bottom: 40px;
@@ -19,7 +28,10 @@
     .contentVideo {
       width: 1002px;
       height: 563px;
-      background: yellow; //test
+      video {
+        width: 1002px;
+        height: 563px;
+      }
     }
     .contentBody {
       width: 1002px;
@@ -47,7 +59,7 @@
           width: 156px;
           height: 97px;
           margin-top: 171px;
-          background: yellow; //test
+          /*background: yellow; //test*/
           z-index: 1;
         }
       }
@@ -66,8 +78,8 @@
         width: 548px;
         height: 719px;
         margin: 0;
-        transform: scale(1.26); //fix the swiper bug
-        .swiperSlide {
+        //transform: scale(1.26); //fix the swiper bug
+        .playSlide {
           width: 548px;
           height: 719px;
           background-position: center;

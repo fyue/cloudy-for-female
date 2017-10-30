@@ -50,7 +50,7 @@ class Detail extends React.Component {
 
   setBigImage(uri) {
     this.setState((state) => {
-      state.bigImage = uri + '_500x500q90.jpg';
+      state.bigImage = uri + '_500x500q90.jpg_.webp';
     });
   }
 
