@@ -21,10 +21,7 @@ class Prize extends React.Component {
 
     return (
       <div className={css.prize}>
-        <div className={css.text}>
-          <div className={css.rmb}>RMB</div>
-          <div className={css.qhj}>券后价</div>
-        </div>
+        <div className={css.rmb}>RMB</div>
         <div className={css.number}>{prize}</div>
       </div>
     );
