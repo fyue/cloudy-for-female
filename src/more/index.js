@@ -6,6 +6,7 @@ import ReactCSSTransitionGroup from 'react/lib/ReactCSSTransitionGroup';
 import reqwest from 'reqwest';
 import Second from './Second';
 import Screen from './Screen';
+import Story from './Story';
 /* header */
 import h1 from '../image/sec/header/1.jpg';
 import h2 from '../image/sec/header/2.jpg';
@@ -306,6 +307,7 @@ class Layout extends React.Component {
     this.buriedPoint = this.buriedPoint.bind(this);
     this.refreshTouchDelay = this.refreshTouchDelay.bind(this);
     this.reGoScreen = this.reGoScreen.bind(this);
+    this.goStory = this.goStory.bind(this);
   }
 
   dataLoad(productList, index) {
@@ -759,6 +761,12 @@ class Layout extends React.Component {
     }
   }
 
+  goStory() {
+    if (this.state.variety === 0) {
+      this.go('story');
+    }
+  }
+
   getTime() {
     const date = new Date();
     const year = date.getFullYear();
@@ -784,7 +792,13 @@ class Layout extends React.Component {
     reqwest({
       url: buriedPointUrl + data,
       type: 'jsonp',
-      method: 'get'
+      method: 'get',
+/*      success: (data) => {
+        console.log('buried OK:', data);
+      },
+      error: (data) => {
+        console.log('buried falied:', data);
+      },*/
     });
   }
 
@@ -798,6 +812,7 @@ class Layout extends React.Component {
 
   render() {
     console.log('enter in :', this.state.goAhead);
+    console.log('Product[0]:', this.state.products[0]);
     let renderProxy = null;
     switch (this.state.goAhead) {
       case 'main' : {
@@ -807,7 +822,7 @@ class Layout extends React.Component {
         break;
       }
       case 'second' : {
-        renderProxy = <Second products={this.state.products[this.state.variety]} go={this.go} goDetail={this.goDetail}
+        renderProxy = <Second products={this.state.products[this.state.variety]} go={this.go} goDetail={this.goDetail} goStory={this.goStory}
                               cataData={this.state.cataData} key="second"/>;
         break;
       }
@@ -819,6 +834,10 @@ class Layout extends React.Component {
       }
       case 'screen' : {
         renderProxy = <Screen go={this.go}/>;
+        break;
+      }
+      case 'story' : {
+        renderProxy = <Story go={this.go}/>;
         break;
       }
     }

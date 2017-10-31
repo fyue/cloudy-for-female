@@ -4,6 +4,30 @@ const IS_DEV = process.env.NODE_ENV !== 'production';
 const path = require('path'); // eslint-disable-line
 const srcPath = path.resolve('./src');
 
+/*const xx = {
+  context: 'D:\\Sinx\\project\\yunhuojia1.0女士',
+  entry: {index: 'D:\\Sinx\\project\\yunhuojia1.0女士\\src/index.js'},
+  output: {
+    path: 'D:\\Sinx\\project\\yunhuojia1.0女士\\build',
+    filename: '[name].min.js',
+    chunkFilename: 'chunks/[name]/[chunkhash].js',
+    publicPath: '',
+    pathinfo: false
+  },
+  module: {rules: [[Object], [Object], [Object]]},
+  plugins: [ProvidePlugin {definitions: [Object]},
+    HtmlWebpackPlugin {options: [Object]},
+    DefinePlugin {definitions: [Object]},
+    CaseSensitivePathsPlugin {options: {}, pathCache: {}, fsOperations: 0, primed: false},
+    WatchMissingNodeModulesPlugin {
+      nodeModulesPath: 'D:\\Sinx\\project\\yunhuojia1.0女士\\node_modules'
+    },
+    ExtractTextPlugin {filename: '[name].min.css', id: 1, options: [Object]},
+    UglifyJsPlugin {options: [Object]},
+    OptimizeCssAssetsPlugin {options: [Object], lastCallInstance: [Object]}],
+  resolve: {extensions: ['.js', '.json', '.jsx']}
+};*/
+
 module.exports = (config) => {
   const { module, resolve } = config;
 
@@ -87,6 +111,33 @@ module.exports = (config) => {
   updatedConfig.plugins.push(
     new ExtractTextPlugin({filename: '[name].min.css', allChunks: true})
   );
-
   return updatedConfig;
 };
+
+/*updatedConfig = {
+  context: 'D:\\Sinx\\project\\yunhuojia1.0女士',
+  entry: {index: 'D:\\Sinx\\project\\yunhuojia1.0女士\\src/index.js'},
+  output: {
+    path: 'D:\\Sinx\\project\\yunhuojia1.0女士\\build',
+    filename: '[name].min.js',
+    chunkFilename: 'chunks/[name]/[chunkhash].js',
+    publicPath: '',
+    pathinfo: false
+  },
+  module: {rules: [[Object], [Object], [Object], [Object], [Object], [Object]]},
+  plugins: [ProvidePlugin {definitions: [Object]},
+    HtmlWebpackPlugin {options: [Object]},
+    DefinePlugin {definitions: [Object]},
+    CaseSensitivePathsPlugin {options: {}, pathCache: {}, fsOperations: 0, primed: false},
+    WatchMissingNodeModulesPlugin {
+      nodeModulesPath: 'D:\\Sinx\\project\\yunhuojia1.0女士\\node_modules'
+    },
+    ExtractTextPlugin {filename: '[name].min.css', id: 1, options: [Object]},
+    UglifyJsPlugin {options: [Object]},
+    OptimizeCssAssetsPlugin {options: [Object], lastCallInstance: [Object]},
+    ExtractTextPlugin {filename: '[name].min.css', id: 1, options: [Object]}],
+  resolve: {
+    extensions: ['.js', '.json', '.jsx'],
+    alias: {components: 'D:\\Sinx\\project\\yunhuojia1.0女士\\src/components'}
+  }
+};*/

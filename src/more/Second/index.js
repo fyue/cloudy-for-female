@@ -46,10 +46,10 @@ export default class Second extends React.Component {
 
   renderCenter() {
     let {header, ids, labels, items} = this.props.cataData;
-    const {products} = this.props;
+    const {products, goStory} = this.props;
     return (
       <div className={css.centerWapper}>
-        <img src={header} />
+        <img src={header} onTouchEnd={goStory} />
         <div className={css.bod}>
           <div className={css.scrollWrapper}>
             {items.map((items, index) => (
